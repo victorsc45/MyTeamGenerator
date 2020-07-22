@@ -1,88 +1,138 @@
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+const render = require("./lib/htmlRenderer");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 const util = require("util");
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
+const teamMembers = [];
+
+// const allnumeric = async (id) => {
+//     var nums = /^[0-9]+$/;
+//     if (id.value.match(nums)) {
+//         console.log('Your Employee number has accepted....');
+
+//         return true;
+//     }
+//     else {
+//         console.log('Please input numeric characters only');
+
+//         return false;
+//     }
+// };
 
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-const writeFileAsync = util.promisify(fs.writeFile);
+//const writeFileAsync = util.promisify(fs.writeFile);
 
 // function call to initialize program
+promptUser();
+// array of questions for user using inquirer node module functionality
 
-init();
-
-// function to initialize program
-
-async function init() {
-    console.log("welcome to the README.md file Generator");
+async function promptUser() {
     try {
-        const answers = await promptUser();
+        console.log("Welcome to the CLI Team Generator add your team members here!");
+        const name = await inquirer.prompt({
+            type: "input",
+            name: "name",
+            message: "Please enter the employee name here:"
+        });
+        const id = await inquirer.prompt({
+            type: "input",
+            name: "id",
+            message: "Please enter employee id no more than 2 digits",
+            // validate: allnumeric,
+        });
+        const email = await inquirer.prompt({
+            type: "input",
+            name: "email",
+            message: "Please enter employee's email",
+            default: () => { },
+            validate: function (email) {
 
-        const markDown = generateMarkdown(answers);
+                valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
 
-        await writeFileAsync("README.md", markDown);
+                if (valid) {
+                    console.log("     Great, Thanks!");
+                    return true;
+                } else {
+                    console.log(".  Please enter a valid email")
+                    return false;
+                }
+            }
+        });
+        const role = await inquirer.prompt({
+            type: "list",
+            name: "role",
+            message: "Select which part of the team this employee is on:",
+            choices: [
+                "Engineer",
+                "Intern",
+                "Manager"],
 
-        console.log("Successfully wrote to README.md");
+        });
+
+        let empSpecInfo = "";
+        if (role === "Engineer") {
+            empSpecInfo = "As an engineer enter the Github username:";
+        }
+        else if (role === "Intern") {
+            empSpecInfo = "As an Intern enter the school this employee is representing:";
+        }
+        else {
+            empSpecInfo = "Enter Manager's office space number";
+        }
+        let fillEmpInfo = await inquirer.prompt({
+            type: "input",
+            message: `Input: ${empSpecInfo}`,
+            name: "fillEmpInfo",
+        });
+        // The user's input is determined 
+        switch (role) {
+            case "Engineer":
+                let github = fillEmpInfo;
+                teamMembers.push(new Engineer(name, id, email, github));
+                console.log("engineer is working");
+            case "Intern":
+                let school = fillEmpInfo;
+                teamMembers.push(new Intern(name, id, email, school));
+                console.log("intern is working");
+            case "Manager":
+                let officeNumber = fillEmpInfo;
+                teamMembers.push(new Manager(name, id, email, officeNumber));
+                console.log("manager is working");
+        }
+        const addTeamMember = await inquirer.prompt({
+            type: "confirm",
+            message: "Add another Team Member?",
+            default: "y/n",
+            name: "addTeamMember",
+
+        });
+
+
+        if (addTeamMember === "Y") {
+            promptUser();
+        } else {
+            console.log("addtoteamFalse", addTeamMember);
+            console.log("team:", teamMembers.toString());
+            //  const html = render(teamMembers);
+            // fs.writeFileSync(outputPath, html, "utf8");
+            return;
+        }
+
+        console.log("Successfully written");
     } catch (err) {
         console.log(err);
     }
 }
 
-// array of questions for user using inquirer node module functionality
 
-// Prompts the user for a letter
-askPosition() {
-    return inquirer
-        .prompt([
-            {
-                type: "list",
-                name: "employee",
-                message: "Select which part of the Team you are on!",
-                choice: [
-                    "Engineer",
-                    "Intern",
-                    "Manager",]
-            },
-            {
-                type: "input",
-                name: "name",
-                message: "Please enter your name here."
-            },
-            {
-                type: "input",
-                name: "email",
-                message: "Please enter your email",
-                default: () => { },
-                validate: function (email) {
 
-                    valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
-
-                    if (valid) {
-                        console.log("Great job");
-                        return true;
-                    } else {
-                        console.log(".  Please enter a valid email")
-                        return false;
-                    }
-                }
-
-            },
-        ])
-        .then(val => {
-            // The user's input is determined 
-            const Employee = this.employee(val.choice);
-            if (Employee === "Engineer") {
-                getGitHub(github);
-
-            } else if (Employee === "Intern") {
-                getSchool();
-            }
-        });
-}
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
@@ -92,10 +142,10 @@ askPosition() {
 // `output` folder. You can use the variable `outputPath` above target this location.
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+// const OUTPUT_DIR = path.resolve(__dirname, "output");
+// const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("./lib/htmlRenderer");
+// const render = require("./lib/htmlRenderer");
 
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
