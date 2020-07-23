@@ -93,35 +93,38 @@ async function promptUser() {
             type: "input",
             name: "empSpecEng",
             message: "As an engineer enter the Github username:",
-            when: (answers) => answers.role === "Engineer",
-        }).then(answers => {
-            let github = empSpecEng;
-            teamMembers.push(new Engineer(name, id, email, github));
-            console.log("engineer is working");
-        });
+            when: (answers) => role === "Engineer",
+        })
+
+        let github = empSpecEng;
+        teamMembers.push(new Engineer(name, id, email, github));
+        console.log("engineer is working");
+
 
 
         const { empSpecIntrn } = await inquirer.prompt({
             type: "input",
             name: "empSpecIntrn",
             message: "As an Intern enter the school this employee is representing:",
-            when: (answers) => answers.role === "Intern",
+            when: (answers) => role === "Intern",
 
-        }).then(answers => {
-            let school = empSpecIntrn;
-            teamMembers.push(new Intern(name, id, email, school));
-            console.log("intern is working");
-        });
+        })
+
+        let school = empSpecIntrn;
+        teamMembers.push(new Intern(name, id, email, school));
+        console.log("intern is working");
+
         const { empSpecMngr } = await inquirer.prompt({
             type: "input",
             name: "empSpecMngr",
             message: "Enter Manager's office space number:",
-            when: (answers) => answers.role === "Manager",
-        }).then(answers => {
-            let officeNumber = empSpecMngr;
-            teamMembers.push(new Manager(name, id, email, officeNumber));
-            console.log("manager is working");
-        });
+            when: (answers) => role === "Manager",
+        })
+
+        let officeNumber = empSpecMngr;
+        teamMembers.push(new Manager(name, id, email, officeNumber));
+        console.log("manager is working");
+
 
 
         const { addTeamMember } = await inquirer.prompt({
@@ -130,18 +133,18 @@ async function promptUser() {
             default: "y/n",
             name: "addTeamMember",
 
-        }).then(res => {
-            if (addTeamMember === "Y") {
-                console.log("Successfully written add member");
-                promptUser();
-            } else {
-                console.log("addtoteamFalse", addTeamMember);
-                console.log("team:", teamMembers.toString());
-                //  const html = render(teamMembers);
-                // fs.writeFileSync(outputPath, html, "utf8");
-                return;
-            }
-        });
+        })
+        if (addTeamMember === "Y") {
+            console.log("Successfully input employee / add new member now:");
+            promptUser();
+        } else {
+            console.log("addtoteamFalse", addTeamMember);
+            console.log("team:", teamMembers.toString());
+            //  const html = render(teamMembers);
+            // fs.writeFileSync(outputPath, html, "utf8");
+            return;
+        }
+
 
 
 
