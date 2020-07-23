@@ -138,21 +138,26 @@ async function promptUser() {
 
 
         const { addTeamMember } = await inquirer.prompt({
-            type: "confirm",
+            type: "list",
             message: "Add another Team Member?",
-            default: "y/n",
             name: "addTeamMember",
+            choices: ["Yes", "No"],
+
 
         })
-        if (addTeamMember === "Yes") {
-            console.log("Successfully input employee / add new member now:");
-            promptUser();
-        } else {
-            console.log("addtoteamFalse", addTeamMember);
-            console.log("team:", teamMembers);
-            //  const html = render(teamMembers);
-            // fs.writeFileSync(outputPath, html, "utf8");
-            return;
+        let addMem = addTeamMember;
+        switch (addMem) {
+            case "Yes":
+                console.log("team right now:", teamMembers);
+                console.log("Successfully input employee / add new member" + addMem);
+                promptUser();
+                break;
+            case "No":
+                console.log("addtoteamFalse", addMem);
+                console.log("team:", teamMembers);
+                //  const html = render(teamMembers);
+                // fs.writeFileSync(outputPath, html, "utf8");
+                break;
         }
 
 
