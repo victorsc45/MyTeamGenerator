@@ -139,7 +139,7 @@ async function promptUser() {
             promptUser();
         } else {
             console.log("addtoteamFalse", addTeamMember);
-            console.log("team:", teamMembers.toString());
+            console.log("team:", teamMembers);
             //  const html = render(teamMembers);
             // fs.writeFileSync(outputPath, html, "utf8");
             return;
