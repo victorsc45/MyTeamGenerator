@@ -96,9 +96,7 @@ async function promptUser() {
             when: (answers) => role === "Engineer",
         })
 
-        let github = empSpecEng;
-        teamMembers.push(new Engineer(name, id, email, github));
-        console.log("engineer is working");
+
 
 
 
@@ -110,9 +108,7 @@ async function promptUser() {
 
         })
 
-        let school = empSpecIntrn;
-        teamMembers.push(new Intern(name, id, email, school));
-        console.log("intern is working");
+
 
         const { empSpecMngr } = await inquirer.prompt({
             type: "input",
@@ -121,9 +117,23 @@ async function promptUser() {
             when: (answers) => role === "Manager",
         })
 
-        let officeNumber = empSpecMngr;
-        teamMembers.push(new Manager(name, id, email, officeNumber));
-        console.log("manager is working");
+        switch (role) {
+            case "Engineer":
+                let github = empSpecEng;
+                teamMembers.push(new Engineer(name, id, email, github));
+                console.log("engineer is working");
+                break;
+            case "Intern":
+                let school = empSpecIntrn;
+                teamMembers.push(new Intern(name, id, email, school));
+                console.log("intern is working");
+                break;
+            case "Manager":
+                let officeNumber = empSpecMngr;
+                teamMembers.push(new Manager(name, id, email, officeNumber));
+                console.log("manager is working");
+                break;
+        }
 
 
 
@@ -134,7 +144,7 @@ async function promptUser() {
             name: "addTeamMember",
 
         })
-        if (addTeamMember === "Y") {
+        if (addTeamMember === "Yes") {
             console.log("Successfully input employee / add new member now:");
             promptUser();
         } else {
