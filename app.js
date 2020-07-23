@@ -5,7 +5,7 @@ const render = require("./lib/htmlRenderer");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-const util = require("util");
+//const util = require("util");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 const teamMembers = [];
@@ -22,32 +22,43 @@ const teamMembers = [];
 
 //         return false;
 //     }
-// };
-
-
+// }
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 //const writeFileAsync = util.promisify(fs.writeFile);
 
 // function call to initialize program
 promptUser();
-// array of questions for user using inquirer node module functionality
+// array of questions for user using inquirer node module functionality of inquirer to prompt user
 
 async function promptUser() {
     try {
         console.log("Welcome to the CLI Team Generator add your team members here!");
-        const name = await inquirer.prompt({
+        const { name } = await inquirer.prompt({
             type: "input",
             name: "name",
             message: "Please enter the employee name here:"
         });
-        const id = await inquirer.prompt({
+        const { id } = await inquirer.prompt({
             type: "input",
             name: "id",
-            message: "Please enter employee id no more than 2 digits",
-            // validate: allnumeric,
+            message: "Please enter employee id whole numbers only:",
+            // validate: function (id) {
+            //     let nums = /^[0-9]+$/;
+            //     if (id.value.match(nums)) {
+            //         console.log('Your Employee number has accepted....');
+
+            //         return true;
+            //     }
+            //     else {
+            //         console.log('Please input numeric characters only');
+
+            //         return false;
+            //     }
+            // }
         });
-        const email = await inquirer.prompt({
+
+        const { email } = await inquirer.prompt({
             type: "input",
             name: "email",
             message: "Please enter employee's email",
@@ -65,7 +76,7 @@ async function promptUser() {
                 }
             }
         });
-        const role = await inquirer.prompt({
+        const { role } = await inquirer.prompt({
             type: "list",
             name: "role",
             message: "Select which part of the team this employee is on:",
@@ -76,56 +87,65 @@ async function promptUser() {
 
         });
 
-        let empSpecInfo = "";
-        if (role === "Engineer") {
-            empSpecInfo = "As an engineer enter the Github username:";
-        }
-        else if (role === "Intern") {
-            empSpecInfo = "As an Intern enter the school this employee is representing:";
-        }
-        else {
-            empSpecInfo = "Enter Manager's office space number";
-        }
-        let fillEmpInfo = await inquirer.prompt({
+
+
+        const { empSpecEng } = await inquirer.prompt({
             type: "input",
-            message: `Input: ${empSpecInfo}`,
-            name: "fillEmpInfo",
+            name: "empSpecEng",
+            message: "As an engineer enter the Github username:",
+            when: (answers) => answers.role === "Engineer",
+        }).then(answers => {
+            let github = empSpecEng;
+            teamMembers.push(new Engineer(name, id, email, github));
+            console.log("engineer is working");
         });
-        // The user's input is determined 
-        switch (role) {
-            case "Engineer":
-                let github = fillEmpInfo;
-                teamMembers.push(new Engineer(name, id, email, github));
-                console.log("engineer is working");
-            case "Intern":
-                let school = fillEmpInfo;
-                teamMembers.push(new Intern(name, id, email, school));
-                console.log("intern is working");
-            case "Manager":
-                let officeNumber = fillEmpInfo;
-                teamMembers.push(new Manager(name, id, email, officeNumber));
-                console.log("manager is working");
-        }
-        const addTeamMember = await inquirer.prompt({
+
+
+        const { empSpecIntrn } = await inquirer.prompt({
+            type: "input",
+            name: "empSpecIntrn",
+            message: "As an Intern enter the school this employee is representing:",
+            when: (answers) => answers.role === "Intern",
+
+        }).then(answers => {
+            let school = empSpecIntrn;
+            teamMembers.push(new Intern(name, id, email, school));
+            console.log("intern is working");
+        });
+        const { empSpecMngr } = await inquirer.prompt({
+            type: "input",
+            name: "empSpecMngr",
+            message: "Enter Manager's office space number:",
+            when: (answers) => answers.role === "Manager",
+        }).then(answers => {
+            let officeNumber = empSpecMngr;
+            teamMembers.push(new Manager(name, id, email, officeNumber));
+            console.log("manager is working");
+        });
+
+
+        const { addTeamMember } = await inquirer.prompt({
             type: "confirm",
             message: "Add another Team Member?",
             default: "y/n",
             name: "addTeamMember",
 
+        }).then(res => {
+            if (addTeamMember === "Y") {
+                console.log("Successfully written add member");
+                promptUser();
+            } else {
+                console.log("addtoteamFalse", addTeamMember);
+                console.log("team:", teamMembers.toString());
+                //  const html = render(teamMembers);
+                // fs.writeFileSync(outputPath, html, "utf8");
+                return;
+            }
         });
 
 
-        if (addTeamMember === "Y") {
-            promptUser();
-        } else {
-            console.log("addtoteamFalse", addTeamMember);
-            console.log("team:", teamMembers.toString());
-            //  const html = render(teamMembers);
-            // fs.writeFileSync(outputPath, html, "utf8");
-            return;
-        }
 
-        console.log("Successfully written");
+
     } catch (err) {
         console.log(err);
     }
