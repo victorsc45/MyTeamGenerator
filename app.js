@@ -128,8 +128,10 @@ async function promptUser() {
             case "No":
                 console.log("addtoteamFalse", addMem);
                 console.log("team:", employees);
-                const html = render(employees);
-                fs.writeFileSync(outputPath, html, "utf8");
+                // const html = render(employees);
+                //console.log("html", html);
+                if (!fs.existsSync(OUTPUT_DIR)) { fs.mkdirSync(OUTPUT_DIR) };
+                fs.writeFileSync(outputPath, render(employees), "utf-8");
                 break;
         }
     } catch (err) {
