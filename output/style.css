@@ -17,11 +17,12 @@ body
     color: black;
     margin: auto, 0;
 }
-
+/* set background color for banner jumbotron */
 .jumbotron {
 background-color: #4aaaa4;
 opacity: .7;
 }
+/* set card properties for final htlm render */
 .card {
     
     border-color: black;
