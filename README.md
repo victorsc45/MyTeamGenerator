@@ -27,6 +27,7 @@
   * [GitHub Information](#github-information)
   * [Questions](#questions)
   * [Credits](#credits)
+  * [Testing](#testing)
    <!-- toc stop -->
 
 # Description
@@ -44,7 +45,7 @@
     so that I have quick access to emails and GitHub profiles and remember the school that our interns working from.
 #### **User input**
 
-The project must prompt the user to build an engineering team. An engineering
+The project prompts the user to build an engineering team. An engineering
 team consists of a manager, and any number of engineers and interns.
 
 #### **Roster output**
@@ -60,7 +61,7 @@ The project must generate a `team.html` page in the `output` directory, that dis
   * Role-specific property (School, link to GitHub profile, or office number)
 
   * Validation of id and email are added to ensure that the information provided is in the proper expected format.
-  
+
 # Contributors
 
 #### askBCS Learning assistant @iarcones "big props!" :)
@@ -84,7 +85,12 @@ The project must generate a `team.html` page in the `output` directory, that dis
 
  ### Credits
 
-# https://npmjs.com/package/inquirer
-# https://stackoverflow.com/questions/57321266/how-to-test-inquirer-validation
-# https://stackoverflow.com/questions/18688389/how-execute-other-prompt-when-prompt-previous-is-true-on-yeoman
+#### https://npmjs.com/package/inquirer
+#### https://stackoverflow.com/questions/57321266/how-to-test-inquirer-validation
+#### https://stackoverflow.com/questions/18688389/how-execute-other-prompt-when-prompt-previous-is-true-on-yeoman
+
+# Testing
+
+**testing I have provided a screenshot of final html and a link to a video that demos the application**
+
 

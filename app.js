@@ -16,7 +16,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 // array to store created team member json objects
 
 const employees = [];
-
+let oneMngr = 0;
 // function call to initialize program
 
 promptUser();
@@ -131,9 +131,18 @@ async function promptUser() {
                 console.log("intern is working");
                 break;
             case "Manager":
-                let officeNumber = empSpecMngr;
-                employees.push(new Manager(name, id, email, officeNumber));
-                console.log("manager is working");
+
+                if (oneMngr < 1) {
+                    let officeNumber = empSpecMngr;
+                    employees.push(new Manager(name, id, email, officeNumber));
+                    console.log("Manager is working");
+                    oneMngr++;
+
+                } else {
+                    console.log("Only enter one manager for this project; sorry.");
+
+
+                }
                 break;
         }
 
@@ -146,20 +155,16 @@ async function promptUser() {
             choices: ["Yes", "No"],
         })
 
-
-        //  create an HTML file using the HTML
+        // if the user wants to add another team member the switch returns to promptUser function
+        // else it checks for an output directory...
         // returned from the `render` function. Now write it to a file named `team.html` in the output folder
 
         let addMem = addTeamMember;
         switch (addMem) {
             case "Yes":
-                console.log("team right now:", employees);
-                console.log("Successfully input employee / add new member" + addMem);
                 promptUser();
                 break;
             case "No":
-                console.log("addtoteamFalse", addMem);
-                console.log("team:", employees);
                 if (!fs.existsSync(OUTPUT_DIR)) { fs.mkdirSync(OUTPUT_DIR) };
                 fs.writeFileSync(outputPath, render(employees), "utf8");
                 break;
