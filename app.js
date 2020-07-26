@@ -123,22 +123,19 @@ async function promptUser() {
             case "Engineer":
                 let github = empSpecEng;
                 employees.push(new Engineer(name, id, email, github));
-                console.log("engineer is working");
-                console.log("engineer", employees);
+                console.log("engineer is on the team now!");
                 break;
             case "Intern":
                 let school = empSpecIntrn;
                 employees.push(new Intern(name, id, email, school));
-                console.log("intern is working");
-                console.log("intern", employees);
+                console.log("intern is on the team now!");
                 break;
             case "Manager":
                 if (oneMngr < 1) {
                     let officeNumber = empSpecMngr;
                     employees.push(new Manager(name, id, email, officeNumber));
-                    console.log("Manager is working");
+                    console.log("Manager is on the team now!");
                     oneMngr++;
-                    console.log("manager", employees);
                 } else {
                     console.log("Only enter one manager for this project; sorry.");
                 }
@@ -166,7 +163,7 @@ async function promptUser() {
             case "No":
                 if (!fs.existsSync(OUTPUT_DIR)) { fs.mkdirSync(OUTPUT_DIR) };
                 fs.writeFileSync(outputPath, render(employees), "utf8");
-                console.log("html", outputPath);
+                console.log("Team has been successfully written to team.html: Let's get to work!")
                 break;
         }
     } catch (err) {
