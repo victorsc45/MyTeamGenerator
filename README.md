@@ -93,4 +93,8 @@ The project must generate a `team.html` page in the `output` directory, that dis
 
 **testing I have provided a screenshot of final html and a link to a video that demos the application**
 
+ <img src="./Assets/screenshot.png" width="500px">
 
+### Video Demo Link
+
+https://drive.google.com/file/d/1SycrDqJxLcFgu_pKqF-2XUAELIpgLd2X/view

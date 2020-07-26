@@ -124,24 +124,23 @@ async function promptUser() {
                 let github = empSpecEng;
                 employees.push(new Engineer(name, id, email, github));
                 console.log("engineer is working");
+                console.log("engineer", employees);
                 break;
             case "Intern":
                 let school = empSpecIntrn;
                 employees.push(new Intern(name, id, email, school));
                 console.log("intern is working");
+                console.log("intern", employees);
                 break;
             case "Manager":
-
                 if (oneMngr < 1) {
                     let officeNumber = empSpecMngr;
                     employees.push(new Manager(name, id, email, officeNumber));
                     console.log("Manager is working");
                     oneMngr++;
-
+                    console.log("manager", employees);
                 } else {
                     console.log("Only enter one manager for this project; sorry.");
-
-
                 }
                 break;
         }
@@ -167,6 +166,7 @@ async function promptUser() {
             case "No":
                 if (!fs.existsSync(OUTPUT_DIR)) { fs.mkdirSync(OUTPUT_DIR) };
                 fs.writeFileSync(outputPath, render(employees), "utf8");
+                console.log("html", outputPath);
                 break;
         }
     } catch (err) {
