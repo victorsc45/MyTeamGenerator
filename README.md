@@ -6,7 +6,7 @@
      * select the license badge to view licence aggreements:
 
      
-[![License](https://img.shields.io/badge/License-MIT-lime.svg)](target="_blank" https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-MIT-lime.svg)](https://opensource.org/licenses/MIT)
 
   ### :octocat:
   ### node js :package: 
