@@ -23,6 +23,7 @@ background-color: #4aaaa4;
 opacity: .7;
 }
 .card {
+    width: auto;
     border-color: black;
 }
 .card-header {
@@ -37,4 +38,10 @@ opacity: .7;
     background-image: url("https://www.transparenttextures.com/patterns/concrete-wall.png");
 }
 
-
+.work {
+    float: left;
+    margin:40px 40px;
+ }
+.work:nth-child(odd) {
+    margin-right: 40px;
+}
