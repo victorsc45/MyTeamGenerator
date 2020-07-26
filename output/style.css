@@ -1,0 +1,40 @@
+/* update some styling to have a cleaner view */
+
+/* border inside box size */
+* {
+    box-sizing: border-box;
+}
+/* set body weight and background properties */
+
+body 
+{
+    background-color: #fff;
+    /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+    background-image: url("https://www.transparenttextures.com/patterns/concrete-wall.png");
+    font-size: 16px;
+    line-height: 32px;
+    font-family: 'Arial', 'Helveticaa Neue', Arial, Helvetica, sans-serif;
+    color: #777;
+    margin: auto, 0;
+}
+
+.jumbotron {
+background-color: #4aaaa4;
+opacity: .7;
+}
+.card {
+    border-color: black;
+}
+.card-header {
+    background-color: #4aaaa4;
+}
+.card-body {
+    background-color:#f5f7f7;
+}
+.list-group-item {
+     background-color: #fff;
+    /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+    background-image: url("https://www.transparenttextures.com/patterns/concrete-wall.png");
+}
+
+
